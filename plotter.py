@@ -1,29 +1,17 @@
 import turtle
-
-DIMENSIONS = 100
-TICK = 1
-DOT_SIZE = 3
-PRECISION = 10
-ZOOM = -5
-LIGHT = 'light'
-DARK = 'dark'
-DELAY = 0
-DEGREE90 = 90
-FONT = 'Arial'
-FONT_SIZE = 12
-FONT_TYPE = 'normal'
+import constants as ct
 
 class Equation:
     def __init__(self):
-        self.dimensions = DIMENSIONS
-        self.tick = TICK
-        self.dot_size = DOT_SIZE
-        self.precision = PRECISION
-        self.zoom = ZOOM
-        self.mode = LIGHT
-        self.font = FONT
-        self.font_size = FONT_SIZE
-        self.font_type = FONT_TYPE
+        self.dimensions = ct.DIMENSIONS
+        self.tick = ct.TICK
+        self.dot_size = ct.DOT_SIZE
+        self.precision = ct.PRECISION
+        self.zoom = ct.ZOOM
+        self.mode = ct.LIGHT
+        self.font = ct.FONT
+        self.font_size = ct.FONT_SIZE
+        self.font_type = ct.FONT_TYPE
 
         dms = self.dimensions
         pcs = self.precision
@@ -31,24 +19,24 @@ class Equation:
 
         self.turtle = turtle.Turtle()
         self.screen = turtle.Screen()
-        turtle.delay(DELAY)
+        turtle.delay(ct.DELAY)
 
-    def set_dimensions(self, dimensions=DIMENSIONS):
+    def set_dimensions(self, dimensions=ct.DIMENSIONS):
         self.dimensions = dimensions
 
-    def set_tick(self, tick=TICK):
+    def set_tick(self, tick=ct.TICK):
         self.tick = tick
 
-    def set_dot_size(self, dot_size=DOT_SIZE):
+    def set_dot_size(self, dot_size=ct.DOT_SIZE):
         self.dot_size = dot_size
 
-    def set_precision(self, precision=PRECISION):
+    def set_precision(self, precision=ct.PRECISION):
         self.precision = precision
 
-    def set_zoom(self, zoom=ZOOM):
+    def set_zoom(self, zoom=ct.ZOOM):
         self.zoom = zoom
 
-    def set_mode(self, mode=LIGHT):
+    def set_mode(self, mode=ct.LIGHT):
         self.mode = mode
 
     def open_screen(self):
@@ -63,10 +51,10 @@ class Equation:
         pass
 
     def draw_plane(self):
-        if self.mode == LIGHT:
+        if self.mode == ct.LIGHT:
             self.screen.bgcolor('white')
             self.turtle.pencolor('black')
-        elif self.mode == DARK:
+        elif self.mode == ct.DARK:
             self.screen.bgcolor('black')
             self.turtle.pencolor('green')
 
@@ -128,7 +116,7 @@ class Equation:
                 self.turtle.dot(self.dot_size)
 
             if not turned:
-                self.turtle.setheading(DEGREE90)
+                self.turtle.setheading(ct.DEGREE90)
                 turned = True
 
         self.turtle.hideturtle()

@@ -1,0 +1,12 @@
+DIMENSIONS = 100
+TICK = 1
+DOT_SIZE = 3
+PRECISION = 10
+ZOOM = -5
+LIGHT = 'light'
+DARK = 'dark'
+DELAY = 0
+DEGREE90 = 90
+FONT = 'Arial'
+FONT_SIZE = 12
+FONT_TYPE = 'normal'
