@@ -50,14 +50,17 @@ class Equation:
     def plot_equation(self):
         pass
 
+    def write_equation():
+        pass
+
     def draw_plane(self):
-        if self.mode == ct.LIGHT:
+        if type == ct.LIGHT:
             self.screen.bgcolor('white')
             self.turtle.pencolor('black')
-        elif self.mode == ct.DARK:
+        elif type == ct.DARK:
             self.screen.bgcolor('black')
             self.turtle.pencolor('green')
-
+        
         self.turtle.showturtle()
         position = self.turtle.position()
         self.turtle.pendown()
@@ -69,8 +72,6 @@ class Equation:
 
         x += float(self.tick / 5)
         y += float(self.tick / 5)
-
-
 
         self.turtle.penup()
         self.turtle.setposition(x, y)
@@ -154,6 +155,14 @@ class Linear(Equation):
         
         self.turtle.hideturtle()
         self.screen.exitonclick()
+    
+    def write_equation(self, a, c):
+        temp = self.turtle.position()
+        self.turtle.penup()
+        z = self.zoom / 2
+        self.turtle.setposition(-self.dimensions + z, self.dimensions - z)
+        self.turtle.write(f'y = {a}x + {c}')
+        self.turtle.setposition(temp)
 
 class Quadratic(Equation):
     def __init__(self):
@@ -173,6 +182,14 @@ class Quadratic(Equation):
         
         self.turtle.hideturtle()
         self.screen.exitonclick()
+    
+    def write_equation(self, a, b, c):
+        temp = self.turtle.position()
+        self.turtle.penup()
+        z = self.zoom / 2
+        self.turtle.setposition(-self.dimensions + z, self.dimensions - z)
+        self.turtle.write(f'y = {a}x^2 + {b}x + {c}')
+        self.turtle.setposition(temp)
 
 class Trigonometric(Equation):
     def __init__(self):
@@ -192,3 +209,11 @@ class Trigonometric(Equation):
         
         self.turtle.hideturtle()
         self.screen.exitonclick()
+    
+    def write_equation(self, a, c, type):
+        temp = self.turtle.position()
+        self.turtle.penup()
+        z = self.zoom / 2
+        self.turtle.setposition(-self.dimensions + z, self.dimensions - z)
+        self.turtle.write(f'y = {a}{type}(x) + {c}')
+        self.turtle.setposition(temp)
