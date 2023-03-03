@@ -1,17 +1,24 @@
 import plotter
 import math
 
-equation = plotter.Quadratic()
 
-equation.set_dimensions(20)
-equation.set_dot_size(3)
-equation.set_mode('light')
-equation.set_precision(10)
-equation.set_tick(2)
-equation.set_zoom(5)
 
-equation.open_screen()
+sec = plotter.Linear()
+sec.set_dimensions(20)
+sec.set_dot_size(3)
+sec.set_mode('light')
+sec.set_precision(110)
+sec.set_tick(1)
+sec.set_zoom(10)
 
-equation.draw_plane()
 
-equation.plot_equation(0.1, 1, 0)
+
+sec.open_screen()
+
+
+
+sec.draw_plane()
+
+
+
+sec.plot_equation(2, 5)

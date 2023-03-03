@@ -62,37 +62,54 @@ class Equation:
         position = self.turtle.position()
         self.turtle.pendown()
 
+        self.turtle.setposition(position)
+
+        x = self.turtle.position()[0]
+        y = self.turtle.position()[1]
+
+        x += float(self.tick / 5)
+        y += float(self.tick / 5)
+
+
+
+        self.turtle.penup()
+        self.turtle.setposition(x, y)
+        self.turtle.write('0')
+
         turned = False
         for _ in range(0, 2):
             self.turtle.setposition(position)
 
-            for _ in range(0, self.dimensions, self.tick):
-                temp = self.turtle.position()
-                if not turned:
-                    x = self.turtle.position()[0]
-                    y = self.turtle.position()[1]
-                    y += float(self.tick / 5)
-                    self.turtle.penup()
-                    self.turtle.setposition(x, y)
-                    self.turtle.write(_)
-                    self.turtle.setposition(temp)
-                    self.turtle.pendown()
-                if turned:
-                    x = self.turtle.position()[0]
-                    y = self.turtle.position()[1]
-                    x += float(self.tick / 5)
-                    self.turtle.penup()
-                    self.turtle.setposition(x, y)
-                    self.turtle.write(_)
-                    self.turtle.setposition(temp)
-                    self.turtle.pendown()
-
+            for _ in range(1, self.dimensions, self.tick):
                 self.turtle.forward(self.tick)
                 self.turtle.dot(self.dot_size)
 
+                temp = self.turtle.position()
+                if not turned:
+                    x = self.turtle.position()[0]
+                    y = self.turtle.position()[1]
+                    y += float(self.tick / 5)
+                    self.turtle.penup()
+                    self.turtle.setposition(x, y)
+                    self.turtle.write(_)
+                    self.turtle.setposition(temp)
+                    self.turtle.pendown()
+                if turned:
+                    x = self.turtle.position()[0]
+                    y = self.turtle.position()[1]
+                    x += float(self.tick / 5)
+                    self.turtle.penup()
+                    self.turtle.setposition(x, y)
+                    self.turtle.write(_)
+                    self.turtle.setposition(temp)
+                    self.turtle.pendown()
+
             self.turtle.setposition(position)
 
-            for _ in range(0, self.dimensions, self.tick):
+            for _ in range(1, self.dimensions, self.tick):
+                self.turtle.backward(self.tick)
+                self.turtle.dot(self.dot_size)
+
                 temp = self.turtle.position()
                 if not turned:
                     x = self.turtle.position()[0]
@@ -112,8 +129,6 @@ class Equation:
                     self.turtle.write(-_)
                     self.turtle.setposition(temp)
                     self.turtle.pendown()
-                self.turtle.backward(self.tick)
-                self.turtle.dot(self.dot_size)
 
             if not turned:
                 self.turtle.setheading(ct.DEGREE90)
