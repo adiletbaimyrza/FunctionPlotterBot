@@ -1,4 +1,5 @@
+import quadratic
 import linear
 
 sec = linear.Linear()
-sec.draw(2, 5)
+sec.draw(5, 2)

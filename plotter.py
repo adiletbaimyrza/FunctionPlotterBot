@@ -11,30 +11,31 @@ class Equation:
         self.font = ct.FONT
         self.font_size = ct.FONT_SIZE
         self.font_type = ct.FONT_TYPE
+        self.zoom = ct.ZOOM
 
         dms = self.dimensions
         pcs = self.precision
-        self.x_range = range(-dms, dms)
-        self.line_range = range(-dms - int(dms*0.2) // 1, dms + int(dms*0.2))
+        self.x_range = range(int(-dms / self.zoom), int(dms / self.zoom))
+        self.line_range = range(-dms * 10, dms * 10)
 
         self.turtle = turtle.Turtle()
         self.screen = turtle.Screen()
         turtle.delay(ct.DELAY)
 
-    def set_dimensions(self, dimensions=ct.DIMENSIONS):
-        self.dimensions = dimensions
+    # def set_dimensions(self, dimensions=ct.DIMENSIONS):
+    #     self.dimensions = dimensions
 
-    def set_tick(self, tick=ct.TICK):
-        self.tick = tick
+    # def set_tick(self, tick=ct.TICK):
+    #     self.tick = tick
 
-    def set_dot_size(self, dot_size=ct.DOT_SIZE):
-        self.dot_size = dot_size
+    # def set_dot_size(self, dot_size=ct.DOT_SIZE):
+    #     self.dot_size = dot_size
 
-    def set_precision(self, precision=ct.PRECISION):
-        self.precision = precision
+    # def set_precision(self, precision=ct.PRECISION):
+    #     self.precision = precision
 
-    def set_mode(self, mode=ct.LIGHT):
-        self.mode = mode
+    # def set_mode(self, mode=ct.LIGHT):
+    #     self.mode = mode
 
     def open_screen(self):
         dms = self.dimensions + (self.dimensions * ct.PADDING) // 1
@@ -88,7 +89,8 @@ class Equation:
 
                 temp = t.position()
                 if enumerate:
-                    enumurate_dots(t.position()[0], t.position()[1], turned, '', temp, _)
+                    n = _ / self.zoom
+                    enumurate_dots(t.position()[0], t.position()[1], turned, '', temp, n)
 
             t.setposition(ct.HOME_POS)
 
@@ -98,7 +100,8 @@ class Equation:
 
                 temp = t.position()
                 if enumerate:
-                    enumurate_dots(t.position()[0], t.position()[1], turned, '-', temp, _)
+                    n = _ / self.zoom
+                    enumurate_dots(t.position()[0], t.position()[1], turned, '-', temp, n)
             
             if not turned:
                 t.setheading(ct.DEGREE90)
@@ -106,7 +109,3 @@ class Equation:
 
         t.hideturtle()
         t.penup()
-
-
-
-

@@ -5,6 +5,16 @@ import constants as ct
 class Linear(Equation):
     def __init__(self):
         super().__init__()
+
+    def write_equation(self, a, c):
+        t = self.turtle
+        initial_pos = t.position()
+
+        dms = self.dimensions
+        equation_pos = (-dms, dms - dms * ct.PADDING)
+        t.setposition(equation_pos)
+        t.write(f'y = {a}x + {c}')
+        t.setposition(initial_pos)
     
     def draw(self, a, c):
         t = self.turtle
@@ -17,7 +27,7 @@ class Linear(Equation):
         t.pencolor('red')
 
         for x in self.x_range:
-            y = a * x + c
+            y = a * self.zoom * x + c * self.zoom # fix zoom
 
             if x in self.line_range and y in self.line_range:
                 t.goto(x, y)
@@ -26,13 +36,3 @@ class Linear(Equation):
         t.hideturtle()
         t.penup()
         turtle.exitonclick()
-    
-    def write_equation(self, a, c):
-        t = self.turtle
-        initial_pos = t.position()
-
-        dms = self.dimensions
-        equation_pos = (-dms, dms - dms * ct.PADDING)
-        t.setposition(equation_pos)
-        t.write(f'y = {a}x + {c}')
-        t.setposition(initial_pos)
