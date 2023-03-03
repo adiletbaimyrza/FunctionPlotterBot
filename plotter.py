@@ -88,7 +88,7 @@ class Equation:
 
                 temp = t.position()
                 if enumerate:
-                    enumurate_dots(t.position()[0], t.position()[1], turned, '', temp, n)
+                    enumurate_dots(t.position()[0], t.position()[1], turned, '', temp, _)
 
             t.setposition(ct.HOME_POS)
 
@@ -98,7 +98,7 @@ class Equation:
 
                 temp = t.position()
                 if enumerate:
-                    enumurate_dots(t.position()[0], t.position()[1], turned, '-', temp, n)
+                    enumurate_dots(t.position()[0], t.position()[1], turned, '-', temp, _)
             
             if not turned:
                 t.setheading(ct.DEGREE90)
