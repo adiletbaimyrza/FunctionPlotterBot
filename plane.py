@@ -1,58 +1,40 @@
 import turtle
 import constants as ct
 
-class Equation:
+class Plane:
     def __init__(self):
         self.dimensions = ct.DIMENSIONS
         self.tick = ct.TICK
         self.dot_size = ct.DOT_SIZE
         self.precision = ct.PRECISION
-        self.mode = ct.LIGHT
+        self.mode = ct.DARK
         self.font = ct.FONT
         self.font_size = ct.FONT_SIZE
         self.font_type = ct.FONT_TYPE
         self.zoom = ct.ZOOM
+        self.enum = ct.ENUM
 
         dms = self.dimensions
         pcs = self.precision
-        self.x_range = range(int(-dms / self.zoom), int(dms / self.zoom))
-        self.line_range = range(-dms * 10, dms * 10)
+        self.x_range = range(-dms * pcs, dms * pcs)
+        self.equation_range = range(-dms * 2, dms * 2)  # the range for equation line is 2 times larger
 
         self.turtle = turtle.Turtle()
         self.screen = turtle.Screen()
         turtle.delay(ct.DELAY)
-
-    # def set_dimensions(self, dimensions=ct.DIMENSIONS):
-    #     self.dimensions = dimensions
-
-    # def set_tick(self, tick=ct.TICK):
-    #     self.tick = tick
-
-    # def set_dot_size(self, dot_size=ct.DOT_SIZE):
-    #     self.dot_size = dot_size
-
-    # def set_precision(self, precision=ct.PRECISION):
-    #     self.precision = precision
-
-    # def set_mode(self, mode=ct.LIGHT):
-    #     self.mode = mode
-
+    
     def open_screen(self):
-        dms = self.dimensions + (self.dimensions * ct.PADDING) // 1
+        padding = (self.dimensions * ct.PADDING) // 1   # conversion to int
+        dms = self.dimensions + padding
         self.screen.setworldcoordinates(-dms, -dms, dms, dms)
 
-    def draw(self):
-        pass
-
-    def write_equation():
-        pass
-
-    def draw_plane(self, enumerate=False):
+    def draw_plane(self, enumerate=True):
+        self.open_screen()
         t = self.turtle
-        t.showturtle()
-        t.pendown()
 
-        def enumurate_dots(a, b, turned, sign, temp, num):
+        t.showturtle()
+
+        def enumurate_dots(a, b, turned, sign, initial_pos, num):
             x = a
             y = b
 
@@ -63,16 +45,23 @@ class Equation:
 
             t.penup()
             t.setposition(x, y)
-            t.write(sign + str(num))
-            t.setposition(temp)
+
+            if sign == '+':
+                t.write(str(num))
+            else:
+                t.write(sign + str(num))
+
+            t.setposition(initial_pos)
             t.pendown()
             
-        if type == ct.LIGHT:
+        if self.mode == 'light':
             self.screen.bgcolor('white')
             t.pencolor('black')
-        elif type == ct.DARK:
-            self.screen.bgcolor('black')
+        elif self.mode == 'dark':
+            self.screen.bgcolor('#282828')
             t.pencolor('green')
+
+        
 
         t.penup()
         t.setposition(ct.ZERO_POS)
@@ -89,8 +78,8 @@ class Equation:
 
                 temp = t.position()
                 if enumerate:
-                    n = _ / self.zoom
-                    enumurate_dots(t.position()[0], t.position()[1], turned, '', temp, n)
+                    num = _ / ct.ZOOM
+                    enumurate_dots(t.position()[0], t.position()[1], turned, '+', temp, num)
 
             t.setposition(ct.HOME_POS)
 
@@ -100,8 +89,8 @@ class Equation:
 
                 temp = t.position()
                 if enumerate:
-                    n = _ / self.zoom
-                    enumurate_dots(t.position()[0], t.position()[1], turned, '-', temp, n)
+                    num = _ / ct.ZOOM
+                    enumurate_dots(t.position()[0], t.position()[1], turned, '-', temp, num)
             
             if not turned:
                 t.setheading(ct.DEGREE90)

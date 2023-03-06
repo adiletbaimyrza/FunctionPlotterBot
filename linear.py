@@ -1,4 +1,4 @@
-from plotter import Equation
+from equation import Equation
 import turtle
 import constants as ct
 
@@ -18,19 +18,17 @@ class Linear(Equation):
     
     def draw(self, a, c):
         t = self.turtle
-
-        self.open_screen()
-        self.draw_plane(enumerate=True)
         self.write_equation(a, c)
 
         t.showturtle()
         t.pencolor('red')
+        t.penup()
 
         for x in self.x_range:
-            y = a * self.zoom * x + c * self.zoom # fix zoom
+            y = a * x + c # fix zoom
 
-            if x in self.line_range and y in self.line_range:
-                t.goto(x, y)
+            if x in self.equation_range and y in self.equation_range:
+                t.goto(ct.ZOOM * x, ct.ZOOM * y)
                 t.pendown()
         
         t.hideturtle()

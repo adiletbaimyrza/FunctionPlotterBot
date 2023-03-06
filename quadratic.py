@@ -1,4 +1,4 @@
-from plotter import Equation
+from equation import Equation
 import turtle
 import constants as ct
 
