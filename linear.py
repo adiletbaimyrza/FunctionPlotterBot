@@ -6,26 +6,30 @@ class Linear(Equation):
     def __init__(self):
         super().__init__()
 
-    def write_equation(self, a, c):
+    def textify(self, a, c):
         t = self.turtle
+        t.penup()
         initial_pos = t.position()
 
         dms = self.dimensions
         equation_pos = (-dms, dms - dms * ct.PADDING)
         t.setposition(equation_pos)
-        t.write(f'y = {a}x + {c}')
+        t.write(f'y = {a}x + {c}') # fix correct output
         t.setposition(initial_pos)
     
-    def draw(self, a, c):
+    def evaluate_y(self, x, a, c) -> float:
+        return a * x + c
+    
+    def plot_graph(self, a, c):
         t = self.turtle
-        self.write_equation(a, c)
+        self.textify(a, c)
 
         t.showturtle()
         t.pencolor('red')
         t.penup()
 
         for x in self.x_range:
-            y = a * x + c # fix zoom
+            y = self.evaluate_y(x, a, c)
 
             if x in self.equation_range and y in self.equation_range:
                 t.goto(ct.ZOOM * x, ct.ZOOM * y)

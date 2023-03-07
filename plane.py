@@ -16,17 +16,19 @@ class Plane:
 
         dms = self.dimensions
         pcs = self.precision
-        self.x_range = range(-dms * pcs, dms * pcs)
-        self.equation_range = range(-dms * 2, dms * 2)  # the range for equation line is 2 times larger
+        self.x_range = range(-dms, dms)
+        self.equation_range = range(-dms * 2, dms * 2)
 
         self.turtle = turtle.Turtle()
         self.screen = turtle.Screen()
         turtle.delay(ct.DELAY)
     
     def open_screen(self):
-        padding = (self.dimensions * ct.PADDING) // 1   # conversion to int
+        padding = (self.dimensions * ct.PADDING) // 1
         dms = self.dimensions + padding
         self.screen.setworldcoordinates(-dms, -dms, dms, dms)
+    
+    # make function to show grid
 
     def draw_plane(self, enumerate=True):
         self.open_screen()
@@ -60,8 +62,6 @@ class Plane:
         elif self.mode == 'dark':
             self.screen.bgcolor('#282828')
             t.pencolor('green')
-
-        
 
         t.penup()
         t.setposition(ct.ZERO_POS)

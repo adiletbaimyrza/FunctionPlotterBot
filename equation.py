@@ -22,8 +22,11 @@ class Equation:
         self.screen = turtle.Screen()
         turtle.delay(ct.DELAY)
 
-    def draw(self):
+    def plot_graph(self):
         pass
 
-    def write_equation():
+    def textify():
+        pass
+
+    def evaluate_y():
         pass
