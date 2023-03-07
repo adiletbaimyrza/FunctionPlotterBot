@@ -4,97 +4,98 @@ import constants as ct
 class Plane:
     def __init__(self):
         self.dimensions = ct.DIMENSIONS
+        self.screen_padding = ct.PADDING
         self.tick = ct.TICK
         self.dot_size = ct.DOT_SIZE
-        self.precision = ct.PRECISION
-        self.mode = ct.DARK
+        self.mode = ct.MODE
         self.font = ct.FONT
         self.font_size = ct.FONT_SIZE
         self.font_type = ct.FONT_TYPE
         self.zoom = ct.ZOOM
         self.enum = ct.ENUM
+        self.zero_pos = ct.ZERO_POS
+        self.degree90 = ct.DEGREE90
+        self.x_padding = ct.X_PADDING
+        self.y_padding = ct.Y_PADDING
 
+        # Calculate the ranges for the plane
         dms = self.dimensions
-        pcs = self.precision
         self.x_range = range(-dms, dms)
-        self.equation_range = range(-dms * 2, dms * 2)
+        self.line_range = range(-dms * 2, dms * 2)
 
+        # Set up the turtle
         self.turtle = turtle.Turtle()
         self.screen = turtle.Screen()
         turtle.delay(ct.DELAY)
     
     def open_screen(self):
-        padding = (self.dimensions * ct.PADDING) // 1
-        dms = self.dimensions + padding
+        # Set the screen coordinates
+        dms = self.dimensions + self.screen_padding
         self.screen.setworldcoordinates(-dms, -dms, dms, dms)
     
-    # make function to show grid
-
     def draw_plane(self, enumerate=True):
+        # Set up the screen and turtle
         self.open_screen()
         t = self.turtle
-
         t.showturtle()
 
-        def enumurate_dots(a, b, turned, sign, initial_pos, num):
-            x = a
-            y = b
-
-            if not turned:
-                y += ct.NUMPADDING_Y
-            if turned:
-                x += ct.NUMPADDING_X
-
-            t.penup()
-            t.setposition(x, y)
-
-            if sign == '+':
-                t.write(str(num))
-            else:
-                t.write(sign + str(num))
-
-            t.setposition(initial_pos)
-            t.pendown()
-            
-        if self.mode == 'light':
-            self.screen.bgcolor('white')
-            t.pencolor('black')
-        elif self.mode == 'dark':
-            self.screen.bgcolor('#282828')
-            t.pencolor('green')
-
+        # Draw 0 at the position (0,0)
         t.penup()
-        t.setposition(ct.ZERO_POS)
+        t.setposition(self.zero_pos)
         t.write('0')
 
+        # Draw the x and y axes
         turned = False
         for _ in range(0, 2):
-            t.setposition(ct.HOME_POS)
+            t.setposition(0, 0)
             t.pendown()
 
-            for _ in range(ct.TICK, self.dimensions + 1, ct.TICK):
-                t.forward(ct.TICK)
-                t.dot(ct.DOT_SIZE)
+            # Draw the positive x/y axis
+            for _ in range(self.tick, self.dimensions + 1, self.tick):
+                t.forward(self.tick)
+                t.dot(self.dot_size)
 
                 temp = t.position()
-                if enumerate:
-                    num = _ / ct.ZOOM
-                    enumurate_dots(t.position()[0], t.position()[1], turned, '+', temp, num)
+                if self.enum:
+                    num = _ / self.zoom
+                    self.enumerate_dots(temp, turned, '+', num)
 
-            t.setposition(ct.HOME_POS)
-
-            for _ in range(ct.TICK, self.dimensions + 1, ct.TICK):
-                t.backward(ct.TICK)
-                t.dot(ct.DOT_SIZE)
+            # Draw the negative x/y axis
+            t.setposition(0,0)
+            for _ in range(self.tick, self.dimensions + 1, self.tick):
+                t.backward(self.tick)
+                t.dot(self.dot_size)
 
                 temp = t.position()
-                if enumerate:
-                    num = _ / ct.ZOOM
-                    enumurate_dots(t.position()[0], t.position()[1], turned, '-', temp, num)
-            
+                if self.enum:
+                    num = _ / self.zoom
+                    self.enumerate_dots(temp, turned, '-', num)
+
+            # Rotate to draw the other axis
             if not turned:
-                t.setheading(ct.DEGREE90)
+                t.setheading(self.degree90)
                 turned = True
 
+        # Hide the turtle
         t.hideturtle()
+
+    def enumerate_dots(self, pos, turned, sign, num):
+        # Enumerate dots on the axis
+        t = self.turtle
+        x, y = pos
+
+        if not turned:
+            y += self.y_padding
+        if turned:
+            x += self.x_padding
+        
         t.penup()
+        t.setposition(x, y)
+
+        if sign == '+':
+            t.write(str(num))
+        else:
+            t.write(sign + str(num))
+        
+        t.setposition(pos)
+        t.pendown()

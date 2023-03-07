@@ -32,12 +32,13 @@ class Linear(Equation):
         t = self.turtle
 
         t.penup()
-
         initial_pos = t.position()
+
         dms = self.dimensions
-        equation_pos = (-dms, dms - dms * ct.PADDING)
+        equation_pos = (-dms, dms - dms * 0.1)
         t.setposition(equation_pos)
-        t.write(self.stringify(a, c)) # fix correct output
+        t.write(self.stringify(a, c))
+
         t.setposition(initial_pos)
     
     def evaluate_y(self, x, a, c) -> float:
@@ -49,14 +50,14 @@ class Linear(Equation):
         self.write_func_on_graph(a, c)
 
         t.showturtle()
-        t.pencolor('red')
+        t.pencolor(self.line_color)
         t.penup()
 
         for x in self.x_range:
             y = self.evaluate_y(x, a, c)
 
-            if x in self.equation_range and y in self.equation_range:
-                t.goto(ct.ZOOM * x, ct.ZOOM * y)
+            if x in self.line_range and y in self.line_range:
+                t.goto(self.zoom * x, self.zoom * y)
                 t.pendown()
         
         t.hideturtle()
