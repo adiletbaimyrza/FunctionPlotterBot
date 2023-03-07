@@ -4,29 +4,18 @@ import constants as ct
 class Equation:
     def __init__(self):
         self.dimensions = ct.DIMENSIONS
-        self.tick = ct.TICK
-        self.dot_size = ct.DOT_SIZE
-        self.precision = ct.PRECISION
-        self.mode = ct.DARK
-        self.font = ct.FONT
-        self.font_size = ct.FONT_SIZE
-        self.font_type = ct.FONT_TYPE
         self.zoom = ct.ZOOM
-
         dms = self.dimensions
-        pcs = self.precision
-        self.x_range = range(-dms * pcs, dms * pcs)
-        self.equation_range = range(-dms * 10, dms * 10)
+        self.x_range = range(-dms, dms)
+        self.equation_range = range(-dms * 2, dms * 2)
 
         self.turtle = turtle.Turtle()
-        self.screen = turtle.Screen()
-        turtle.delay(ct.DELAY)
 
     def plot_graph(self):
         pass
 
-    def textify():
+    def textify(self):
         pass
 
-    def evaluate_y():
+    def evaluate_y(self):
         pass

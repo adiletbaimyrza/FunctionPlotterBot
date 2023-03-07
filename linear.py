@@ -6,15 +6,19 @@ class Linear(Equation):
     def __init__(self):
         super().__init__()
 
+    def stringify(self, a, c) -> str:
+        return f'y = {a}x + {c}'
+
     def textify(self, a, c):
         t = self.turtle
-        t.penup()
-        initial_pos = t.position()
 
+        t.penup()
+
+        initial_pos = t.position()
         dms = self.dimensions
         equation_pos = (-dms, dms - dms * ct.PADDING)
         t.setposition(equation_pos)
-        t.write(f'y = {a}x + {c}') # fix correct output
+        t.write(self.stringify(a, c)) # fix correct output
         t.setposition(initial_pos)
     
     def evaluate_y(self, x, a, c) -> float:
@@ -22,6 +26,7 @@ class Linear(Equation):
     
     def plot_graph(self, a, c):
         t = self.turtle
+
         self.textify(a, c)
 
         t.showturtle()
