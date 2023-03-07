@@ -7,5 +7,5 @@ import plane
 coordinate_plane = plane.Plane()
 coordinate_plane.draw_plane()
 
-sec = linear.Linear()
-sec.plot_graph(0, 2)
+sec = quadratic.Quadratic()
+sec.plot_graph(-0.01, -0.5, 0)
