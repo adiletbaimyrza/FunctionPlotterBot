@@ -7,9 +7,28 @@ class Linear(Equation):
         super().__init__()
 
     def stringify(self, a, c) -> str:
-        return f'y = {a}x + {c}'
+        res_begin = 'f(x) = '
 
-    def textify(self, a, c):
+        if a == 0 and c == 0:
+            res = res_begin + f'{a}'
+        elif a == 0:
+            res = res_begin + f'{c}'
+        elif c == 0:
+            if a == 1:
+                res = res_begin + 'x'
+            else:
+                res = res_begin + f'{a}x'
+        else:
+            if a < 0 and c < 0:
+                res = res_begin + f'{a} ' + '- ' + f'{abs(c)}'
+            elif c < 0:
+                res = res_begin + f'{a}x ' + '- ' + f'{abs(c)}'
+            else:
+                res = res_begin + f'{a}x ' + '+ ' + f'{c}'
+        
+        return res
+
+    def write_func_on_graph(self, a, c):
         t = self.turtle
 
         t.penup()
@@ -27,7 +46,7 @@ class Linear(Equation):
     def plot_graph(self, a, c):
         t = self.turtle
 
-        self.textify(a, c)
+        self.write_func_on_graph(a, c)
 
         t.showturtle()
         t.pencolor('red')
