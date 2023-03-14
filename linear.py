@@ -53,12 +53,11 @@ class Linear(Equation):
         t.pencolor(self.line_color)
         t.penup()
 
-        for x in self.x_range:
+        for x in self.line_range:
             y = self.evaluate_y(x, a, c)
 
-            if x in self.line_range and y in self.line_range:
-                t.goto(self.zoom * x, self.zoom * y)
-                t.pendown()
+            t.goto(self.zoom * x, self.zoom * y)
+            t.pendown()
         
         t.hideturtle()
         t.penup()
