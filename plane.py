@@ -1,5 +1,5 @@
 import turtle
-import constants as ct
+from constants import ConfigConstants as ct
 
 class Plane:
     def __init__(self):
@@ -20,16 +20,15 @@ class Plane:
         self.line_range = range(-dms * 2, dms * 2)
 
         self.turtle = turtle.Turtle()
-        self.screen = turtle.Screen
+        self.screen = turtle.Screen()
         turtle.delay(ct.DELAY)
     
     def open_screen(self):
         dms = self.dimensions + self.screen_padding
-        self.screen().setworldcoordinates(-dms, -dms, dms, dms)
+        self.screen.setworldcoordinates(-dms, -dms, dms, dms)
     
     def draw_plane(self):
         t = self.turtle
-        t.showturtle()
 
         t.penup()
         t.setposition(self.zero_pos)
@@ -64,16 +63,12 @@ class Plane:
                 t.setheading(self.degree90)
                 turned = True
 
-        t.hideturtle()
-
     def enumerate_dots(self, pos, turned, sign, num):
         t = self.turtle
         x, y = pos
 
-        if not turned:
-            y += self.y_padding
-        if turned:
-            x += self.x_padding
+        if not turned: y += self.y_padding
+        if turned: x += self.x_padding
         
         t.penup()
         t.setposition(x, y)
