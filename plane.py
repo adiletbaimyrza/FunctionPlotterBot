@@ -91,13 +91,16 @@ class Plane:
     def make_grid(self):
         t = self.turtle
 
-        initial_pos = t.position()
+        initial_pos = t.pos()
         t.penup()
         t.pencolor('#B1C3C3')
 
         dms = self.dimensions * 2
         xy = 100
         for _ in range(-dms, dms, 10):
+            dms = float(dms)
+            xy = float(xy)
+            
             t.goto(-dms, xy)
             t.pendown()
             t.goto(dms, xy)

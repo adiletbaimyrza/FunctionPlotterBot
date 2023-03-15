@@ -32,10 +32,10 @@ class Linear(Equation):
         t = self.turtle
 
         t.penup()
-        initial_pos = t.position()
+        initial_pos = t.pos()
 
         dms = self.dimensions
-        equation_pos = (-dms, dms - dms * 0.1)
+        equation_pos = (float(-dms), float(dms - dms * 0.1))
         t.setposition(equation_pos)
         t.write(self.stringify(a, c))
 
@@ -61,4 +61,3 @@ class Linear(Equation):
         
         t.hideturtle()
         t.penup()
-        turtle.exitonclick()

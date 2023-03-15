@@ -5,6 +5,8 @@ import math
 import interpreter
 import plane
 import re
+from PIL import Image
+import turtle
 
 eq = interpreter.Input.take_input()
 match = interpreter.Input.check_pattern_linear(eq)
@@ -20,3 +22,10 @@ equation = linear.Linear()
 equation.plot_graph(res[0],res[1])
 equation.write_func_on_graph(res[0], res[1])
 
+ts = turtle.Screen().getcanvas()
+ts.postscript(file='my_drawing.eps')
+
+img = Image.open('my_drawing.eps')
+img.save('my_drawing.jpeg', 'jpeg')
+
+turtle.done()
