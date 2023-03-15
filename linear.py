@@ -37,7 +37,7 @@ class Linear(Equation):
         dms = self.dimensions
         equation_pos = (float(-dms), float(dms - dms * 0.1))
         t.setposition(equation_pos)
-        t.write(self.stringify(a, c))
+        t.write(self.stringify(a, c), font=ct.FONT)
 
         t.setposition(initial_pos)
     
@@ -52,6 +52,7 @@ class Linear(Equation):
         t.showturtle()
         t.pencolor(self.line_color)
         t.penup()
+        t.pensize(self.pen_size)
 
         for x in self.line_range:
             y = self.evaluate_y(x, a, c)

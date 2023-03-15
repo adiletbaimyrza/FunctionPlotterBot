@@ -9,6 +9,7 @@ class Equation:
         dms = self.dimensions
         self.x_range = range(-dms, dms)
         self.line_range = range(-dms * 2, dms * 2)
+        self.pen_size = ct.PEN_SIZE
 
         self.turtle = turtle.Turtle()
 

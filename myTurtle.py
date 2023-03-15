@@ -11,7 +11,7 @@ import turtle
 eq = interpreter.Input.take_input()
 match = interpreter.Input.check_pattern_linear(eq)
 res = interpreter.Input.extract_args(match)
-print(res)
+
 
 coordinate_plane = plane.Plane()
 coordinate_plane.open_screen()

@@ -8,8 +8,6 @@ class Plane:
         self.tick = ct.TICK
         self.dot_size = ct.DOT_SIZE
         self.font = ct.FONT
-        self.font_size = ct.FONT_SIZE
-        self.font_type = ct.FONT_TYPE
         self.zoom = ct.ZOOM
         self.enum = ct.ENUM
         self.zero_pos = ct.ZERO_POS
@@ -22,12 +20,12 @@ class Plane:
         self.line_range = range(-dms * 2, dms * 2)
 
         self.turtle = turtle.Turtle()
-        self.screen = turtle.Screen()
+        self.screen = turtle.Screen
         turtle.delay(ct.DELAY)
     
     def open_screen(self):
         dms = self.dimensions + self.screen_padding
-        self.screen.setworldcoordinates(-dms, -dms, dms, dms)
+        self.screen().setworldcoordinates(-dms, -dms, dms, dms)
     
     def draw_plane(self):
         t = self.turtle
@@ -35,7 +33,7 @@ class Plane:
 
         t.penup()
         t.setposition(self.zero_pos)
-        t.write('0')
+        t.write('0', font=ct.FONT)
 
         turned = False
         for _ in range(0, 2):
@@ -81,9 +79,9 @@ class Plane:
         t.setposition(x, y)
 
         if sign == '+':
-            t.write(str(num))
+            t.write(str(num), font=ct.FONT)
         else:
-            t.write(sign + str(num))
+            t.write(sign + str(num), font=ct.FONT)
         
         t.setposition(pos)
         t.pendown()

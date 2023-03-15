@@ -1,6 +1,5 @@
 import re
 
-
 class Input:
 
     def take_input() -> str:
