@@ -1,15 +1,15 @@
 import turtle
-import constants as ct
+from constants import ConfigConstants as config
 
 class Equation:
     def __init__(self):
-        self.dimensions = ct.DIMENSIONS
-        self.zoom = ct.ZOOM
-        self.line_color = ct.LINE_COLOR
+        self.dimensions = config.DIMENSIONS
+        self.zoom = config.ZOOM
+        self.line_color = config.LINE_COLOR
         dms = self.dimensions
         self.x_range = range(-dms, dms)
         self.line_range = range(-dms * 2, dms * 2)
-        self.pen_size = ct.PEN_SIZE
+        self.pen_size = config.PEN_SIZE
 
         self.turtle = turtle.Turtle()
 

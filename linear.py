@@ -1,6 +1,6 @@
 from equation import Equation
 import turtle
-import constants as ct
+from constants import ConfigConstants as config
 
 class Linear(Equation):
     def __init__(self):
@@ -37,7 +37,7 @@ class Linear(Equation):
         dms = self.dimensions
         equation_pos = (float(-dms), float(dms - dms * 0.1))
         t.setposition(equation_pos)
-        t.write(self.stringify(a, c), font=ct.FONT)
+        t.write(self.stringify(a, c), font=config.FONT)
 
         t.setposition(initial_pos)
     

@@ -1,10 +1,6 @@
-import quadratic
 import linear
-import trigonometric
-import math
 import interpreter
 import plane
-import re
 from PIL import Image
 import turtle
 
