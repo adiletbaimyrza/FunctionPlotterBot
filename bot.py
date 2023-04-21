@@ -2,15 +2,12 @@ import logging
 from telegram import Update
 from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, MessageHandler, filters
 
-import quadratic
 import linear
-import trigonometric
-import math
 import interpreter
 import plane
-import re
 from PIL import Image
 import turtle
+import startMessages
 
 Token = '6220004213:AAGuemjvfG0-p7fNO7BPKTEZXftdtoGftMU'
 
@@ -19,8 +16,8 @@ logging.basicConfig(
     level=logging.INFO
 )
 
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await context.bot.send_message(chat_id=update.effective_chat.id, text='Nice cock.')
+async def startMessages(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await context.bot.send_message(chat_id=update.effective_chat.id, text=)
 
 async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):
     equation = update.message.text
@@ -50,7 +47,7 @@ async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):
 if __name__ == '__main__':
     application = ApplicationBuilder().token(Token).build()
 
-    start_handler = CommandHandler('start', start)
+    start_handler = CommandHandler('start', startMessages)
     message_handler = MessageHandler(filters.TEXT & ~filters.COMMAND, help)
     application.add_handler(message_handler)
     application.add_handler(start_handler)
