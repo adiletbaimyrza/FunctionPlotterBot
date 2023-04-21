@@ -17,7 +17,7 @@ logging.basicConfig(
 )
 
 async def startMessages(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await context.bot.send_message(chat_id=update.effective_chat.id, text=)
+    await context.bot.send_message(chat_id=update.effective_chat.id, text=startMessages)
 
 async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):
     equation = update.message.text
