@@ -7,7 +7,8 @@ import interpreter
 import plane
 from PIL import Image
 import turtle
-import startMessages
+
+start_message = "Hello, type your equation:\nformat: f(x)=2x+5"
 
 Token = '6220004213:AAGuemjvfG0-p7fNO7BPKTEZXftdtoGftMU'
 
@@ -16,14 +17,13 @@ logging.basicConfig(
     level=logging.INFO
 )
 
-async def startMessages(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await context.bot.send_message(chat_id=update.effective_chat.id, text=startMessages)
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await context.bot.send_message(chat_id=update.effective_chat.id, text=start_message)
 
 async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):
     equation = update.message.text
     match = interpreter.Input.check_pattern_linear(equation)
     res = interpreter.Input.extract_args(match)
-
 
     coordinate_plane = plane.Plane()
     coordinate_plane.open_screen()
@@ -47,7 +47,7 @@ async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):
 if __name__ == '__main__':
     application = ApplicationBuilder().token(Token).build()
 
-    start_handler = CommandHandler('start', startMessages)
+    start_handler = CommandHandler('start', start)
     message_handler = MessageHandler(filters.TEXT & ~filters.COMMAND, help)
     application.add_handler(message_handler)
     application.add_handler(start_handler)
