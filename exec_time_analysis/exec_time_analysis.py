@@ -122,7 +122,8 @@ for attribute, measurement in data.items():
 
 ax.set_ylabel('Time (s)')
 ax.set_title('Measurement Of Execution Time Of Graph Plotting Modules ')
-ax.set_xticks(x + width)
+ax.set_xticks(x + (width / 2))
+ax.set_xticklabels(['eq' + str(i) for i in range(1, 11)])
 ax.legend(loc='upper left', ncols=2)
 ax.set_ylim(0, 15)
 
