@@ -1,0 +1,3 @@
+old average(s): 8.660597205162048
+new average(s): 0.25675504207611083
+new module faster: 3373.0972272765557%
