@@ -1,5 +1,5 @@
 import unittest
-import interpreter
+from old_plotter import interpreter
 
 test_linears = [
     'f(x) = 0',

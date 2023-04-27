@@ -1,5 +1,5 @@
 import unittest
-import linear
+from old_plotter import linear
 
 test_strings = [
     'f(x) = 0',

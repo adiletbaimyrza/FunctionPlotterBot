@@ -1,8 +1,7 @@
-from equation import Equation
-import turtle
-from constants import ConfigConstants as config
+from old_plotter import equation
+from old_plotter import constants
 
-class Linear(Equation):
+class Linear(equation.Equation):
     def __init__(self):
         super().__init__()
 
@@ -37,7 +36,7 @@ class Linear(Equation):
         dms = self.dimensions
         equation_pos = (float(-dms), float(dms - dms * 0.1))
         t.setposition(equation_pos)
-        t.write(self.stringify(a, c), font=config.FONT)
+        t.write(self.stringify(a, c), font=constants.ConfigConstants.FONT)
 
         t.setposition(initial_pos)
     

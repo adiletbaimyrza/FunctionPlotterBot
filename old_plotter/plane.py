@@ -1,19 +1,19 @@
 import turtle
-from constants import ConfigConstants as ct
+from old_plotter import constants
 
 class Plane:
     def __init__(self):
-        self.dimensions = ct.DIMENSIONS
-        self.screen_padding = ct.PADDING
-        self.tick = ct.TICK
-        self.dot_size = ct.DOT_SIZE
-        self.font = ct.FONT
-        self.zoom = ct.ZOOM
-        self.enum = ct.ENUM
-        self.zero_pos = ct.ZERO_POS
-        self.degree90 = ct.DEGREE90
-        self.x_padding = ct.X_PADDING
-        self.y_padding = ct.Y_PADDING
+        self.dimensions = constants.ConfigConstants.DIMENSIONS
+        self.screen_padding = constants.ConfigConstants.PADDING
+        self.tick = constants.ConfigConstants.TICK
+        self.dot_size = constants.ConfigConstants.DOT_SIZE
+        self.font = constants.ConfigConstants.FONT
+        self.zoom = constants.ConfigConstants.ZOOM
+        self.enum = constants.ConfigConstants.ENUM
+        self.zero_pos = constants.ConfigConstants.ZERO_POS
+        self.degree90 = constants.ConfigConstants.DEGREE90
+        self.x_padding = constants.ConfigConstants.X_PADDING
+        self.y_padding = constants.ConfigConstants.Y_PADDING
 
         dms = self.dimensions
         self.x_range = range(-dms, dms)
@@ -21,7 +21,7 @@ class Plane:
 
         self.turtle = turtle.Turtle()
         self.screen = turtle.Screen()
-        turtle.delay(ct.DELAY)
+        turtle.delay(constants.ConfigConstants.DELAY)
     
     def open_screen(self):
         dms = self.dimensions + self.screen_padding
@@ -32,7 +32,7 @@ class Plane:
 
         t.penup()
         t.setposition(self.zero_pos)
-        t.write('0', font=ct.FONT)
+        t.write('0', font=constants.ConfigConstants.FONT)
 
         turned = False
         for _ in range(0, 2):
@@ -74,9 +74,9 @@ class Plane:
         t.setposition(x, y)
 
         if sign == '+':
-            t.write(str(num), font=ct.FONT)
+            t.write(str(num), font=constants.ConfigConstants.FONT)
         else:
-            t.write(sign + str(num), font=ct.FONT)
+            t.write(sign + str(num), font=constants.ConfigConstants.FONT)
         
         t.setposition(pos)
         t.pendown()
