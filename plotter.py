@@ -1,13 +1,20 @@
 import matplotlib.pyplot
 import numpy as np
 
+from exceptions import InvalidEquationError
+
 class Plotter:
     def __init__(self, equation, x_range):
         self.equation = equation
         self.x_range = x_range
-        self.samples = self.x_range * 10
+        self.samples = 100
         self.x = np.linspace(-self.x_range, self.x_range, self.samples)
-        self.y = eval(self.equation, {'x': self.x})
+
+        try:
+            self.y = eval(self.equation, {'x': self.x})
+        except Exception:
+            raise InvalidEquationError
+
         self.plt = matplotlib.pyplot
     
     def coordinate_plane(self):
@@ -23,7 +30,11 @@ class Plotter:
         self.plt.tick_params(axis='both', length=0)
 
     def plot(self):
-        self.plt.plot(self.x, self.y)
+        
+        try:
+            self.plt.plot(self.x, self.y)
+        except Exception:
+            raise InvalidEquationError
 
     def save(self, filename):
         self.plt.savefig(filename)
