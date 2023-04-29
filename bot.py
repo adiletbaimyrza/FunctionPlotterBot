@@ -2,11 +2,7 @@ import logging
 from telegram import Update
 from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, MessageHandler, filters
 
-import linear
-import interpreter
-import plane
-from PIL import Image
-import turtle
+import plotter
 
 start_message = "Hello, type your equation:\nformat: f(x)=2x+5"
 
@@ -22,25 +18,11 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):
     equation = update.message.text
-    match = interpreter.Input.check_pattern_linear(equation)
-    res = interpreter.Input.extract_args(match)
-
-    coordinate_plane = plane.Plane()
-    coordinate_plane.open_screen()
-    coordinate_plane.make_grid()
-    coordinate_plane.draw_plane()
-
-    equation = linear.Linear()
-    equation.plot_graph(res[0],res[1])
-    equation.write_func_on_graph(res[0], res[1])
-
-    ts = turtle.Screen().getcanvas()
-    ts.postscript(file='my_drawing.eps')
-
-    img = Image.open('my_drawing.eps')
-    img.save('my_drawing.png', 'png')
-
-    turtle.Screen().clear()
+    my_plotter = plotter.Plotter(equation, 10)
+    my_plotter.coordinate_plane()
+    my_plotter.plot()
+    my_plotter.save('my_drawing.png')
+    my_plotter.clear()
 
     await context.bot.send_photo(chat_id=update.effective_chat.id, photo=open('my_drawing.png', 'rb'))
 
