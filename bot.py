@@ -5,9 +5,12 @@ from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, Messa
 import plotter
 from exceptions import InvalidEquationError
 
-start_message = "Hello, type your equation:\nformat: f(x)=2x+5"
+import os
+from dotenv import load_dotenv
+load_dotenv() # load environment variables from .env file
 
-Token = '6220004213:AAGuemjvfG0-p7fNO7BPKTEZXftdtoGftMU'
+
+start_message = "Hello, type your equation:"
 
 logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s',
@@ -31,7 +34,7 @@ async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await context.bot.send_message(chat_id=update.effective_chat.id, text='Invalid equation')
 
 if __name__ == '__main__':
-    application = ApplicationBuilder().token(Token).build()
+    application = ApplicationBuilder().token(os.getenv('token_key')).build()
 
     start_handler = CommandHandler('start', start)
     message_handler = MessageHandler(filters.TEXT & ~filters.COMMAND, help)
