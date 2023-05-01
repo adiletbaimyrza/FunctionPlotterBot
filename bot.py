@@ -23,7 +23,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):
     equation = update.message.text
     try:
-        my_plotter = plotter.Plotter(equation, 1)
+        my_plotter = plotter.Plotter(equation, 10)
         my_plotter.coordinate_plane()
         my_plotter.plot()
         my_plotter.save('my_drawing.png')
