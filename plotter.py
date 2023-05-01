@@ -5,6 +5,9 @@ from exceptions import InvalidEquationError
 
 class Plotter:
     def __init__(self, equation, x_range):
+        if '=' in equation:
+            equation = equation.split('=')[1]
+            
         self.equation = equation
         self.x_range = x_range
         self.samples = 100
@@ -30,7 +33,7 @@ class Plotter:
         self.plt.tick_params(axis='both', length=0)
 
     def plot(self):
-        
+
         try:
             self.plt.plot(self.x, self.y)
         except Exception:
