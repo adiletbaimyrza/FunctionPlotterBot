@@ -19,6 +19,33 @@ class Plotter:
             raise InvalidEquationError
 
         self.plt = matplotlib.pyplot
+
+    def set_equation(self, equation):
+        if '=' in equation:
+            equation = equation.split('=')[1]
+            
+        self.equation = equation
+        self.samples = 100
+        self.x = np.linspace(-self.x_range, self.x_range, self.samples)
+
+        try:
+            self.y = eval(self.equation, {'x': self.x})
+        except Exception:
+            raise InvalidEquationError
+
+        self.plt = matplotlib.pyplot
+    
+    def set_x_range(self, x_range):
+        self.x_range = x_range
+        self.samples = 100
+        self.x = np.linspace(-self.x_range, self.x_range, self.samples)
+
+        try:
+            self.y = eval(self.equation, {'x': self.x})
+        except Exception:
+            raise InvalidEquationError
+
+        self.plt = matplotlib.pyplot
     
     def coordinate_plane(self):
         self.plt.gca().spines['top'].set_visible(False)
