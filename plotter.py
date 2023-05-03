@@ -7,11 +7,12 @@ class Plotter:
     def __init__(self, equation, x_range):
         if '=' in equation:
             equation = equation.split('=')[1]
-            
+
         self.equation = equation
         self.x_range = x_range
         self.samples = 100
         self.x = np.linspace(-self.x_range, self.x_range, self.samples)
+        self.perspective = True
 
         try:
             self.y = eval(self.equation, {'x': self.x})
@@ -23,7 +24,7 @@ class Plotter:
     def set_equation(self, equation):
         if '=' in equation:
             equation = equation.split('=')[1]
-            
+
         self.equation = equation
         self.samples = 100
         self.x = np.linspace(-self.x_range, self.x_range, self.samples)
@@ -35,6 +36,9 @@ class Plotter:
 
         self.plt = matplotlib.pyplot
     
+    def get_equation(self):
+        return self.equation
+
     def set_x_range(self, x_range):
         self.x_range = x_range
         self.samples = 100
@@ -46,7 +50,13 @@ class Plotter:
             raise InvalidEquationError
 
         self.plt = matplotlib.pyplot
-    
+
+    def set_perspective(self, perspective):
+        self.perspective = perspective
+
+    def get_perpective(self):
+        return self.perspective
+
     def coordinate_plane(self):
         self.plt.gca().spines['top'].set_visible(False)
         self.plt.gca().spines['right'].set_visible(False)
@@ -59,10 +69,17 @@ class Plotter:
         self.plt.ylabel('y axis')
         self.plt.tick_params(axis='both', length=0)
 
-    def plot(self):
+    def plot(self, perspective):
 
         try:
             self.plt.plot(self.x, self.y)
+            max_abs_y = max(abs(max(self.y)), abs(min(self.y)))
+            if perspective:
+                self.plt.xlim(-self.x_range, self.x_range)
+                self.plt.ylim(-max_abs_y, max_abs_y)
+            else:
+                self.plt.xlim(-self.x_range, self.x_range)
+                self.plt.ylim(-self.x_range, self.x_range)
         except Exception:
             raise InvalidEquationError
 
@@ -70,4 +87,4 @@ class Plotter:
         self.plt.savefig(filename)
 
     def clear(self):
-        self.plt.clf()        
+        self.plt.clf()
