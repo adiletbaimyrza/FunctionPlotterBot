@@ -1,7 +1,7 @@
 import matplotlib.pyplot
 import numpy as np
 
-from exceptions import InvalidEquationError
+from exceptions import *
 
 class Plotter:
     def __init__(self, equation, x_range):
@@ -21,6 +21,16 @@ class Plotter:
 
         self.plt = matplotlib.pyplot
 
+    def setter(self, field, value):
+        if field == 'range':
+            self.set_x_range(float(value))
+        elif field == 'equation':
+            self.set_equation(value)
+        elif field == 'perspective':
+            self.set_perspective(True if value == 'on' else False)
+        else:
+            raise SetterError
+
     def set_equation(self, equation):
         if '=' in equation:
             equation = equation.split('=')[1]
@@ -35,9 +45,6 @@ class Plotter:
             raise InvalidEquationError
 
         self.plt = matplotlib.pyplot
-    
-    def get_equation(self):
-        return self.equation
 
     def set_x_range(self, x_range):
         self.x_range = x_range
@@ -50,9 +57,12 @@ class Plotter:
             raise InvalidEquationError
 
         self.plt = matplotlib.pyplot
-
+    
     def set_perspective(self, perspective):
         self.perspective = perspective
+
+    def get_equation(self):
+        return self.equation
 
     def get_perpective(self):
         return self.perspective
@@ -70,7 +80,6 @@ class Plotter:
         self.plt.tick_params(axis='both', length=0)
 
     def plot(self, perspective):
-
         try:
             self.plt.plot(self.x, self.y)
             max_abs_y = max(abs(max(self.y)), abs(min(self.y)))
