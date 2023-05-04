@@ -2,6 +2,12 @@ import logging
 from telegram import Update
 from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, MessageHandler, filters
 
+import os
+import dotenv
+
+dotenv.load_dotenv()
+token_key = os.getenv('token_key')
+
 import plotter
 from exceptions import *
 
@@ -24,6 +30,7 @@ def identify_args(arg):
         return 'perspective'
     else:
         raise InvalidArgumentError
+    
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_chat.id
@@ -80,8 +87,9 @@ async def set(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     await context.bot.send_photo(chat_id=user_id, photo=open('my_drawing.png', 'rb'))
 
+
 if __name__ == '__main__':
-    application = ApplicationBuilder().token('5770029784:AAHx7_4L4S_wuIm8kJr-9dky5_V0ALUWwjk').build()
+    application = ApplicationBuilder().token(token_key).build()
 
     start_handler = CommandHandler('start', start)
     help_handler = CommandHandler('help', help)
