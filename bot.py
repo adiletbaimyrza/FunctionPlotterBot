@@ -3,7 +3,7 @@ from telegram import Update
 from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, MessageHandler, filters
 
 import plotter
-from exceptions import InvalidEquationError
+from exceptions import *
 
 start_message = "Hello, type your equation:"
 help_message = "Type your equation and I will plot it for you"
@@ -14,6 +14,16 @@ logging.basicConfig(
 )
 
 users = {}
+
+def identify_args(arg):
+    if arg == 'equation':
+        return 'equation'
+    elif arg == 'range':
+        return 'range'
+    elif arg == 'perspective':
+        return 'perspective'
+    else:
+        raise InvalidArgumentError
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_chat.id
@@ -38,49 +48,31 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await context.bot.send_message(chat_id=user_id, text='Invalid equation')
 
 
-async def range(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    user_id = update.effective_chat.id
-    x_range = abs(float(context.args[0]))
-    if user_id not in users:
-        users[user_id] = plotter.Plotter('x**2', 10.5)
-    my_plotter = users[user_id]
-    my_plotter.set_x_range(float(x_range))
-    
-    if context.args[1] == 'apply':
-        my_plotter.coordinate_plane()
-        my_plotter.plot(my_plotter.get_perpective())
-        my_plotter.save('my_drawing.png')
-        my_plotter.clear()
-
-        await context.bot.send_photo(chat_id=user_id, photo=open('my_drawing.png', 'rb'))
-    else:
-        await context.bot.send_message(chat_id=user_id, text='Range set to ' + str(x_range))
-
-
 async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(chat_id=update.effective_chat.id, text=help_message)
 
 
-async def perspective(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def set(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_chat.id
     if user_id not in users:
         users[user_id] = plotter.Plotter('x**2', 10.5)
     my_plotter = users[user_id]
-    my_plotter.set_perspective(bool(int(context.args[0])))
 
-    if context.args[1] == 'apply':
-        my_plotter.coordinate_plane()
-        my_plotter.plot(my_plotter.get_perpective())
-        my_plotter.save('my_drawing.png')
-        my_plotter.clear()
+    args = context.args
 
-        await context.bot.send_photo(chat_id=user_id, photo=open('my_drawing.png', 'rb'))
+    if len(args) == 2:
+        my_plotter.setter(identify_args(args[0]), args[1])
+    elif len(args) == 4:
+        my_plotter.setter(identify_args(args[0]), args[1])
+        my_plotter.setter(identify_args(args[2]), args[3])
+    elif len(args) == 6:
+        my_plotter.setter(identify_args(args[0]), args[1])
+        my_plotter.setter(identify_args(args[2]), args[3])
+        my_plotter.setter(identify_args(args[4]), args[5])
     else:
-        await context.bot.send_message(chat_id=user_id, text='Perspective set to ' + str(my_plotter.get_perpective()))
-
-async def plot(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    user_id = update.effective_chat.id
-    my_plotter = users[user_id]
+        await context.bot.send_message(chat_id=user_id, text='Invalid arguments')
+        return
+    
     my_plotter.coordinate_plane()
     my_plotter.plot(my_plotter.get_perpective())
     my_plotter.save('my_drawing.png')
@@ -93,16 +85,12 @@ if __name__ == '__main__':
 
     start_handler = CommandHandler('start', start)
     help_handler = CommandHandler('help', help)
-    range_handler = CommandHandler('range', range)
-    perspective_handler = CommandHandler('perspective', perspective)
     message_handler = MessageHandler(filters.TEXT & ~filters.COMMAND, message)
-    plot_handler = CommandHandler('plot', plot)
+    set_handler = CommandHandler('set', set)
 
     application.add_handler(message_handler)
     application.add_handler(start_handler)
     application.add_handler(help_handler)
-    application.add_handler(range_handler)
-    application.add_handler(perspective_handler)
-    application.add_handler(plot_handler)
+    application.add_handler(set_handler)
 
     application.run_polling()
